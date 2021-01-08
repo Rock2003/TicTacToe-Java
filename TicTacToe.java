@@ -1,11 +1,16 @@
+// Tic Tac Toe console game that implements a Minimax Algorithm
+// Part of the BC Tech Club 2nd project to see here: https://github.com/BC-Tech-Club
+// Console only-No GUI implemented yet
+
 import java.util.Scanner;
 
 public class TicTacToe {
 	
+	// Tic Tac Toe board state: "X" for player 1 and "O" for player 2
 	static String[] moves = {" ", " ", " ", " ", " ", " ", " ", " ", " "};
 	static boolean game = true;
 	
-	
+	// Launches the game
 	public static void main(String[] args){
 		Scanner scan = new Scanner(System.in);
 		String player = "player 1";
@@ -24,7 +29,7 @@ public class TicTacToe {
 		}
 	}
 
-	
+	// copies a String array
 	public static String[] helper(String[] copy) {
 		String[] copyCat = new String[9];
 		for(int i = 0 ; i < 9; i++) {
@@ -33,6 +38,8 @@ public class TicTacToe {
 		return copyCat;
 	}
 	
+	// The minimax algorithm starts here, where it launches multiple recursions
+	// to find the best moves to make in the game.
 	public static void minimax() {
 		boolean first = true;
 		int bestMove = -999;
@@ -56,7 +63,7 @@ public class TicTacToe {
 		}
 		move("O", bestMove, moves);
 	}
-	
+	// helps continuing the recursion for the Minimax algorithm.
 	public static int recursion(String[] movesCopy, String player) {
 		if(win(player, movesCopy)) {
 			if(player == "O") {
@@ -81,7 +88,7 @@ public class TicTacToe {
 		return score;
 	}
 	
-	
+	// Moves player to the position stated
 	public static void move(String player, int position, String[] moves) {
 		moves[position] = player;
 		if(win(player, moves)) {
@@ -101,7 +108,7 @@ public class TicTacToe {
 		}
 	}
 	
-	
+	// Checks if the game has been won by the player in the parameters.
 	public static boolean win(String player, String[] gameMoves) {
 		if(gameMoves[0] == player && gameMoves[1] == player && gameMoves[2] == player) {
 			return true;
@@ -124,6 +131,7 @@ public class TicTacToe {
 		}		
 	}
 	
+	// prints the current state of the board
 	public static void print() {
 		System.out.println(moves[0] + " | " + moves[1] + " | " + moves[2]);
 		System.out.println("---------");
