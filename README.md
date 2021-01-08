@@ -21,3 +21,9 @@ To facilitate the work between the different parts of this project, I used a Str
 
 
 The user is given the option to either play against another player or play against the bot within a loop until deciding to leave the game.
+
+
+Minimax Algorithm:
+
+
+This algorithm is method/function that calculates the best move to take by forcasting every possible move and calculating the win, lose and tie probability. After calculating the best move, it launches the bot player set as “O” to the position that was best calculated. Recursions and trees knowledege is required for this part.
