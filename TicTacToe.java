@@ -13,20 +13,83 @@ public class TicTacToe {
 	// Launches the game
 	public static void main(String[] args){
 		Scanner scan = new Scanner(System.in);
-		String player = "player 1";
-		while(game) {
-			if(player == "player 1") {
-				print();
-				System.out.print("choose postion: ");
-				int position = scan.nextInt();
-				System.out.println();
-				move("X", position, moves);
-				player = "player 2";
+		while(true) {
+			System.out.println("Enter 0 to play against a player");
+			System.out.println("Or, enter 1 to play against a bot");
+			System.out.print("Enter any other key to quit.");
+			int input = -1;
+			try {
+				input = scan.nextInt();
+			} catch(Exception e) {};
+			if(input == 0) {
+				String player = "X";
+				game = true;
+				while(game) {
+					if(player == "X") {
+						while(true) {
+							print();
+							System.out.print("Player 1: choose postion: ");
+							int position = scan.nextInt();
+							System.out.println();
+							int decision = move("X", position);
+							if(decision == -1) {
+								System.out.println("Error: Position taken");
+							} else if(decision == 0) {
+								System.out.println("Error: Position out of index. Select between 0 and 8");
+							} else {
+								break;
+							}
+						}
+						player = "O";
+					} else {
+						while(true) {
+							print();
+							System.out.print("Player 2: choose postion: ");
+							int position = scan.nextInt();
+							System.out.println();
+							int decision = move("O", position);
+							if(decision == -1) {
+								System.out.println("Error: Position taken");
+							} else if(decision == 0) {
+								System.out.println("Error: Position out of index. Select between 0 and 8");
+							} else {
+								break;
+							}
+						}
+						player = "X";
+					}
+				}
+			} else if (input == 1) {
+				String player = "X";
+				game = true;
+				while(game) {
+					if(player == "X") {
+						while(true) {
+							print();
+							System.out.print("Player 1: choose postion: ");
+							int position = scan.nextInt();
+							System.out.println();
+							int decision = move("X", position);
+							if(decision == -1) {
+								System.out.println("Error: Position taken");
+							} else if(decision == 0) {
+								System.out.println("Error: Position out of index. Select between 0 and 8");
+							} else {
+								break;
+							}
+						}
+						player = "O";
+					} else {
+						minimax();
+						player = "X";
+					}
+				}	
 			} else {
-				minimax();
-				player = "player 1";
+				break;
 			}
+			moves = new String[]{" ", " ", " ", " ", " ", " ", " ", " ", " "};
 		}
+		System.out.println("\nThank you for playing this game!");
 	}
 
 	// copies a String array
@@ -61,7 +124,7 @@ public class TicTacToe {
 				}
 			}
 		}
-		move("O", bestMove, moves);
+		move("O", bestMove);
 	}
 	// helps continuing the recursion for the Minimax algorithm.
 	public static int recursion(String[] movesCopy, String player) {
@@ -89,23 +152,33 @@ public class TicTacToe {
 	}
 	
 	// Moves player to the position stated
-	public static void move(String player, int position, String[] moves) {
+	public static int move(String player, int position) {
+		if(!moves[position].equals(" ")) {
+			return -1;
+		}
+		if(position < 0 || position > 8) {
+			return 0;
+		}
 		moves[position] = player;
 		if(win(player, moves)) {
 			System.out.println(player + " won");
+			print();
 			game = false;
-			return;
+			return 3;
 		}
 		boolean test = true;
 		for(int i =0 ; i< 9; i++) {
 			if(moves[i] == " ") {
-				return;
+				return 1;
 			}
 		}
 		if(test) {
 			System.out.println("Tie!");
+			print();
 			game = false;
+			return 2;
 		}
+		return -9;
 	}
 	
 	// Checks if the game has been won by the player in the parameters.
